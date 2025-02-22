@@ -34,7 +34,7 @@ AgriBrain is a multilingual AI-powered agricultural assistant that helps farmers
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/AgriBrain.git
+git clone https://github.com/Engr-Jalal-Saleem/RAG-Based-Agricultural-Chatbot-Flask-App-Using-Gemini-API
 cd AgriBrain
 ```
 
@@ -166,7 +166,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📞 Support
 
-For support, email [your-email@domain.com] or open an issue in the repository.
+For support, email jalalsaleem786@gmail.com or open an issue in the repository.
 
 ## 🔮 Future Enhancements
 
