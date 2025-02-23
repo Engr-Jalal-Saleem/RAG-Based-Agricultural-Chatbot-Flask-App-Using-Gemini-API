@@ -3,46 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgriBrain - Your Agricultural Assistant</title>
+    <title>AgriBrain - AI-Powered Agricultural Assistant</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/"><i class="fas fa-seedling"></i> AgriBrain</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#chat-section">Chat</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#recommendation-section">Crop Recommendation</a>
-                    </li>
-                </ul>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#"><i class="fas fa-seedling"></i> AgriBrain</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#features">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#chat-section">Chat</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#recommendation-section">Crop Analysis</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#leaf-health-section">Leaf Analysis</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">About</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="hero-content container">
+            <div class="row align-items-center">
+                <div class="col-md-6" data-aos="fade-right">
+                    <h1>Revolutionizing Agriculture with AI</h1>
+                    <p>Empowering farmers with intelligent crop recommendations and disease detection using advanced AI technology.</p>
+                    <div class="hero-buttons">
+                        <a href="#chat-section" class="btn btn-primary btn-lg">Get Started</a>
+                        <a href="#about" class="btn btn-outline-light btn-lg">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-md-6" data-aos="fade-left">
+                    <img src="{{ url_for('static', filename='images/hero-image.png') }}" alt="AI Agriculture" class="hero-image">
+                </div>
             </div>
         </div>
-    </nav>
+    </section>
 
-    <div class="container">
-        <!-- Chat Section -->
-        <section id="chat-section" class="mb-5">
-            <div class="chat-header">
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Intelligent Agricultural Solutions</h2>
+            <div class="row">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card">
+                        <i class="fas fa-robot"></i>
+                        <h3>AI Chat Assistant</h3>
+                        <p>Get expert agricultural advice 24/7 with our AI-powered chatbot.</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card">
+                        <i class="fas fa-seedling"></i>
+                        <h3>Crop Recommendation</h3>
+                        <p>Receive personalized crop suggestions based on soil and climate conditions.</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card">
+                        <i class="fas fa-leaf"></i>
+                        <h3>Disease Detection</h3>
+                        <p>Identify plant diseases instantly with our advanced image analysis.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Section -->
+    <section id="chat-section" class="chat-section">
+        <div class="container">
+            <div class="chat-header" data-aos="fade-up">
                 <div class="logo">
                     <i class="fas fa-robot"></i>
-                    <h1>AgriBrain Assistant</h1>
+                    <h2>AI Agricultural Assistant</h2>
                 </div>
-                <p class="subtitle">Your Intelligent Agricultural Guide</p>
+                <p class="subtitle">Your Intelligent Farming Guide</p>
             </div>
 
-            <div class="chat-container">
+            <div class="chat-container" data-aos="fade-up">
                 <div class="chat-messages markdown-body" id="chatMessages">
                     <div class="bot-message">
                         <i class="fas fa-robot"></i>
@@ -59,13 +118,10 @@
                                 <li>🌱 Soil health management</li>
                                 <li>📊 Market trends and crop planning</li>
                             </ul>
-                            <p>Here are some questions you can ask me:</p>
                             <div class="suggested-questions">
                                 <button class="btn btn-outline-success btn-sm m-1" onclick="askQuestion('What crops are suitable for sandy soil with low rainfall?')">Crops for sandy soil</button>
                                 <button class="btn btn-outline-success btn-sm m-1" onclick="askQuestion('How can I improve soil fertility naturally?')">Improve soil fertility</button>
                                 <button class="btn btn-outline-success btn-sm m-1" onclick="askQuestion('What are organic methods to control pests in tomatoes?')">Organic pest control</button>
-                                <button class="btn btn-outline-success btn-sm m-1" onclick="askQuestion('How to maximize crop yield in limited space?')">Maximize yield</button>
-                                <button class="btn btn-outline-success btn-sm m-1" onclick="askQuestion('What are the best practices for drip irrigation?')">Drip irrigation tips</button>
                             </div>
                         </div>
                     </div>
@@ -78,12 +134,14 @@
                     </button>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Crop Recommendation Section -->
-        <section id="recommendation-section" class="recommendation-container">
-            <h2><i class="fas fa-leaf"></i> Crop Recommendation System</h2>
-            <div class="recommendation-form">
+    <!-- Crop Recommendation Section -->
+    <section id="recommendation-section" class="recommendation-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Crop Recommendation System</h2>
+            <div class="recommendation-form" data-aos="fade-up">
                 <form id="cropForm" onsubmit="getCropRecommendation(event)">
                     <div class="row">
                         <div class="col-md-4 mb-3">
@@ -118,153 +176,167 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Get Recommendation</button>
+                        <button type="submit" class="btn btn-primary btn-lg">Get Recommendation</button>
                     </div>
                 </form>
                 <div id="recommendationResult" class="mt-4"></div>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
 
-    <script>
-        let conversationHistory = [];
-        marked.setOptions({
-            breaks: true,
-            gfm: true
-        });
-
-        function appendMessage(message, isUser, references = []) {
-            const chatMessages = document.getElementById('chatMessages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = isUser ? 'user-message' : 'bot-message';
+    <!-- Leaf Analysis Section -->
+    <section id="leaf-health-section" class="leaf-health-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2><i class="fas fa-leaf"></i> Leaf Health Analysis</h2>
+                <p class="section-description">Upload a leaf image to analyze its health condition and get expert recommendations</p>
+            </div>
             
-            let messageContent = '';
-            if (isUser) {
-                messageContent = `<i class="fas fa-user"></i><div class="message-content">${message}</div>`;
-            } else {
-                messageContent = `
-                    <i class="fas fa-robot"></i>
-                    <div class="message-content">
-                        ${marked.parse(message)}
-                        ${references && references.length > 0 ? `
-                            <div class="references">
-                                <h4>📚 References:</h4>
-                                <ul>
-                                    ${references.map(ref => `<li>${ref}</li>`).join('')}
-                                </ul>
+            <div class="row g-4">
+                <div class="col-md-5" data-aos="fade-right">
+                    <div class="upload-section">
+                        <form id="leafHealthForm" class="mb-4">
+                            <div class="upload-box">
+                                <input type="file" id="leafImage" name="image" accept="image/*" class="form-control" onchange="previewImage(this)">
+                                <div class="upload-placeholder">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Drop your leaf image here or click to upload</p>
+                                    <small class="text-muted">Supports: JPG, PNG (Max 5MB)</small>
+                                </div>
                             </div>
-                        ` : ''}
+                            <div class="preview-box mt-4 d-none">
+                                <img id="imagePreview" src="#" alt="Preview">
+                                <button type="button" class="btn btn-sm btn-danger remove-preview" onclick="removePreview()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-4 w-100">
+                                <i class="fas fa-microscope"></i> Analyze Leaf Health
+                            </button>
+                        </form>
                     </div>
-                `;
-            }
-            
-            messageDiv.innerHTML = messageContent;
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        async function sendMessage() {
-            const userInput = document.getElementById('userInput');
-            const message = userInput.value.trim();
-            
-            if (!message) return;
-
-            appendMessage(message, true);
-            userInput.value = '';
-            userInput.disabled = true;
-
-            try {
-                const response = await fetch('/chat', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ 
-                        message: message,
-                        history: conversationHistory
-                    })
-                });
+                </div>
                 
-                const result = await response.json();
-                
-                if (result.error) {
-                    appendMessage('Error: ' + result.error, false);
-                } else {
-                    appendMessage(result.response, false, result.references);
-                    conversationHistory = result.history;
-                }
-            } catch (error) {
-                appendMessage('Sorry, I encountered an error. Please try again.', false);
-                console.error('Error:', error);
-            } finally {
-                userInput.disabled = false;
-                userInput.focus();
-            }
-        }
+                <div class="col-md-7" data-aos="fade-left">
+                    <div class="result-section">
+                        <div id="analysisResult" class="d-none">
+                            <div class="detection-details">
+                                <h4 class="detection-title mb-3"></h4>
+                                <div class="detection-description"></div>
+                            </div>
+                            
+                            <div class="image-comparison">
+                                <div class="original-image">
+                                    <h4>Original Image</h4>
+                                    <img id="originalImage" src="#" alt="Original Image">
+                                </div>
+                                <div class="processed-image">
+                                    <h4>Analysis Result</h4>
+                                    <img id="resultImage" src="#" alt="Analysis Result">
+                                </div>
+                            </div>
+                            
+                            <div class="recommendations mt-4">
+                                <h4>Expert Recommendations</h4>
+                                <div class="recommendations-content markdown-body">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="placeholderResult">
+                            <div class="text-center">
+                                <i class="fas fa-leaf"></i>
+                                <h4>Upload a leaf image to get started</h4>
+                                <p>Our AI will analyze the leaf health and provide detailed recommendations</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        async function getCropRecommendation(event) {
-            event.preventDefault();
-            const form = event.target;
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
-            
-            try {
-                const response = await fetch('/crop_recommendation', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-                
-                const result = await response.json();
-                const resultDiv = document.getElementById('recommendationResult');
-                
-                if (result.error) {
-                    resultDiv.innerHTML = `<div class="alert alert-danger">${result.error}</div>`;
-                    appendMessage(`Error getting crop recommendation: ${result.error}`, false);
-                } else {
-                    form.reset();
-                    
-                    const recommendationMessage = `# 🌱 Crop Recommendation Results
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">About AgriBrain</h2>
+            <div class="row">
+                <div class="col-md-6" data-aos="fade-right">
+                    <div class="about-content">
+                        <h3>Our Mission</h3>
+                        <p>AgriBrain aims to revolutionize agriculture by bringing AI-powered solutions to farmers worldwide. We combine advanced machine learning with agricultural expertise to provide accurate, actionable insights.</p>
+                        
+                        <h3>Technology Stack</h3>
+                        <ul class="tech-stack">
+                            <li><i class="fas fa-brain"></i> Google Gemini AI</li>
+                            <li><i class="fas fa-network-wired"></i> Machine Learning Models</li>
+                            <li><i class="fas fa-camera"></i> Computer Vision</li>
+                            <li><i class="fas fa-database"></i> Advanced Data Processing</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6" data-aos="fade-left">
+                    <div class="stats-container">
+                        <div class="stat-card">
+                            <h4>95%</h4>
+                            <p>Accuracy in Disease Detection</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>1000+</h4>
+                            <p>Farmers Assisted</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>50+</h4>
+                            <p>Crop Varieties Supported</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>24/7</h4>
+                            <p>AI Assistant Available</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-## Soil and Weather Parameters:
-- Nitrogen (N): ${data.Nitrogen} mg/kg
-- Phosphorus (P): ${data.Phosphorus} mg/kg
-- Potassium (K): ${data.Potassium} mg/kg
-- Temperature: ${data.Temperature}°C
-- Humidity: ${data.Humidity}%
-- pH: ${data.Ph}
-- Rainfall: ${data.Rainfall} mm
-
-## 🎯 Recommended Crop: ${result.predicted_crop}
-
-${result.detailed_recommendation}`;
-
-                    appendMessage(recommendationMessage, false);
-                    
-                    document.getElementById('chat-section').scrollIntoView({ behavior: 'smooth' });
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                appendMessage('Sorry, I encountered an error while getting the crop recommendation. Please try again.', false);
-            }
-        }
-
-        function askQuestion(question) {
-            document.getElementById('userInput').value = question;
-            sendMessage();
-        }
-
-        // Allow sending message with Enter key
-        document.getElementById('userInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-            }
-        });
-    </script>
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h3><i class="fas fa-seedling"></i> AgriBrain</h3>
+                    <p>Empowering farmers with AI-powered agricultural solutions.</p>
+                </div>
+                <div class="col-md-4">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#chat-section">Chat Assistant</a></li>
+                        <li><a href="#recommendation-section">Crop Analysis</a></li>
+                        <li><a href="#leaf-health-section">Leaf Analysis</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AgriBrain. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
 </body>
 </html> 

@@ -1,0 +1,600 @@
+{% extends "base.html" %}
+
+{% block title %}About AgriBrain{% endblock %}
+
+{% block content %}
+<section class="about-section">
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="about-hero" data-aos="fade-up">
+            <h1><i class="fas fa-seedling"></i> About AgriBrain</h1>
+            <p class="lead">Revolutionizing agriculture through artificial intelligence and machine learning</p>
+        </div>
+
+        <!-- Mission Section -->
+        <div class="row align-items-center mission-section">
+            <div class="col-md-6" data-aos="fade-right">
+                <div class="content-card">
+                    <h2>Our Mission</h2>
+                    <p>AgriBrain aims to empower farmers worldwide with cutting-edge AI technology, making precision agriculture accessible to everyone. We combine advanced machine learning with agricultural expertise to provide accurate, actionable insights.</p>
+                    <div class="mission-points">
+                        <div class="point">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Democratizing agricultural technology</span>
+                        </div>
+                        <div class="point">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Promoting sustainable farming practices</span>
+                        </div>
+                        <div class="point">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Enhancing crop yields through AI</span>
+                        </div>
+                        <div class="point">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Supporting local farming communities</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" data-aos="fade-left">
+                <div class="emoji-illustration">
+                    <div class="emoji-row">
+                        <span>🌱</span>
+                        <span>🤖</span>
+                        <span>🌾</span>
+                    </div>
+                    <div class="emoji-row">
+                        <span>🌿</span>
+                        <span>🧬</span>
+                        <span>🌺</span>
+                    </div>
+                    <div class="emoji-row">
+                        <span>🌳</span>
+                        <span>📱</span>
+                        <span>🌞</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technology Stack -->
+        <div class="tech-stack-section" data-aos="fade-up">
+            <h2>Our Technology Stack</h2>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="tech-card">
+                        <i class="fas fa-brain"></i>
+                        <h3>AI & ML</h3>
+                        <ul>
+                            <li>🤖 Google Gemini AI</li>
+                            <li>🔥 PyTorch</li>
+                            <li>📊 Scikit-learn</li>
+                            <li>👁️ YOLO Object Detection</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="tech-card">
+                        <i class="fas fa-server"></i>
+                        <h3>Backend</h3>
+                        <ul>
+                            <li>🐍 Python</li>
+                            <li>🌐 Flask</li>
+                            <li>📸 OpenCV</li>
+                            <li>⛓️ LangChain</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="tech-card">
+                        <i class="fas fa-database"></i>
+                        <h3>Data Processing</h3>
+                        <ul>
+                            <li>🔢 NumPy</li>
+                            <li>🐼 Pandas</li>
+                            <li>💾 ChromaDB</li>
+                            <li>🧮 Vector Embeddings</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="tech-card">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>Frontend</h3>
+                        <ul>
+                            <li>🎨 HTML5/CSS3</li>
+                            <li>⚡ JavaScript</li>
+                            <li>🎯 Bootstrap</li>
+                            <li>📱 Responsive Design</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features-section" data-aos="fade-up">
+            <h2>Key Features</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3>AI Chat Assistant</h3>
+                        <p>24/7 intelligent agricultural advice powered by Google's Gemini AI, providing context-aware responses in multiple languages.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <h3>Crop Recommendation</h3>
+                        <p>ML-powered crop suggestions based on soil parameters and environmental conditions, with detailed cultivation guidance.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h3>Disease Detection</h3>
+                        <p>Advanced computer vision for early detection of plant diseases, with treatment recommendations and preventive measures.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section" data-aos="fade-up">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="number">95<span>%</span></div>
+                        <p>Accuracy in Disease Detection</p>
+                        <div class="emoji">🎯</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="number">1000<span>+</span></div>
+                        <p>Farmers Assisted</p>
+                        <div class="emoji">👨‍🌾</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="number">50<span>+</span></div>
+                        <p>Crop Varieties Supported</p>
+                        <div class="emoji">🌾</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="number">24<span>/7</span></div>
+                        <p>AI Assistant Available</p>
+                        <div class="emoji">🤖</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Section -->
+        <div class="team-section" data-aos="fade-up">
+            <h2>Meet the Team</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="team-card">
+                        <div class="emoji-avatar">👨‍💻</div>
+                        <h3>John Doe</h3>
+                        <p class="role">AI/ML Engineer</p>
+                        <p class="bio">Specializes in machine learning and computer vision, with expertise in agricultural applications.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="team-card">
+                        <div class="emoji-avatar">👩‍🔬</div>
+                        <h3>Jane Smith</h3>
+                        <p class="role">Agricultural Expert</p>
+                        <p class="bio">Agricultural scientist with 10+ years of experience in crop science and sustainable farming.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="team-card">
+                        <div class="emoji-avatar">👨‍💻</div>
+                        <h3>Mike Johnson</h3>
+                        <p class="role">Full Stack Developer</p>
+                        <p class="bio">Full stack developer with expertise in building scalable agricultural technology solutions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section text-center" data-aos="fade-up">
+            <h2>Ready to Transform Your Farming? 🚀</h2>
+            <p>Join thousands of farmers using AgriBrain to optimize their crops and increase yields.</p>
+            <div class="cta-buttons">
+                <a href="{{ url_for('chat') }}" class="btn btn-primary btn-lg">Get Started Now</a>
+                <a href="#" class="btn btn-outline-primary btn-lg">Contact Us</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+.about-section {
+    padding-top: 8rem;
+    background-color: var(--background-color);
+}
+
+.about-hero {
+    text-align: center;
+    padding: 4rem 0;
+    margin-bottom: 4rem;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+    border-radius: 1rem;
+}
+
+.about-hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.about-hero p {
+    font-size: 1.5rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Mission Section */
+.mission-section {
+    margin-bottom: 6rem;
+}
+
+.content-card {
+    padding: 2rem;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.content-card h2 {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.mission-points {
+    margin-top: 2rem;
+}
+
+.point {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.point i {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+/* Tech Stack Section */
+.tech-stack-section {
+    margin-bottom: 6rem;
+    text-align: center;
+}
+
+.tech-stack-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: var(--text-color);
+}
+
+.tech-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.tech-card:hover {
+    transform: translateY(-5px);
+}
+
+.tech-card i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.tech-card h3 {
+    color: var(--text-color);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.tech-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.tech-card li {
+    margin-bottom: 0.5rem;
+    color: var(--light-text);
+}
+
+/* Features Section */
+.features-section {
+    margin-bottom: 6rem;
+    text-align: center;
+}
+
+.features-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: var(--text-color);
+}
+
+.feature-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-card .icon {
+    width: 80px;
+    height: 80px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.feature-card .icon i {
+    font-size: 2rem;
+}
+
+.feature-card h3 {
+    color: var(--text-color);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.feature-card p {
+    color: var(--light-text);
+    margin: 0;
+}
+
+/* Stats Section */
+.stats-section {
+    margin-bottom: 6rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card .number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.stat-card span {
+    font-size: 2rem;
+}
+
+.stat-card p {
+    color: var(--light-text);
+    margin: 0;
+}
+
+/* Team Section */
+.team-section {
+    margin-bottom: 6rem;
+    text-align: center;
+}
+
+.team-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: var(--text-color);
+}
+
+.team-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.team-card:hover {
+    transform: translateY(-5px);
+}
+
+.team-card img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 1.5rem;
+    object-fit: cover;
+}
+
+.team-card h3 {
+    color: var(--text-color);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.team-card .role {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.team-card .bio {
+    color: var(--light-text);
+    margin: 0;
+}
+
+/* CTA Section */
+.cta-section {
+    padding: 4rem;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+    border-radius: 1rem;
+    margin-bottom: 4rem;
+}
+
+.cta-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.cta-section p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.cta-buttons .btn-outline-primary {
+    border-color: white;
+    color: white;
+}
+
+.cta-buttons .btn-outline-primary:hover {
+    background: white;
+    color: var(--primary-color);
+}
+
+.emoji-illustration {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.emoji-row {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 1rem 0;
+}
+
+.emoji-row span {
+    font-size: 3rem;
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.emoji-row span:hover {
+    transform: scale(1.2);
+}
+
+.stat-card .emoji {
+    font-size: 2.5rem;
+    margin-top: 1rem;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover .emoji {
+    transform: scale(1.2);
+    opacity: 1;
+}
+
+.emoji-avatar {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.team-card:hover .emoji-avatar {
+    transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+    .about-section {
+        padding-top: 6rem;
+    }
+
+    .about-hero {
+        padding: 3rem 1rem;
+    }
+
+    .about-hero h1 {
+        font-size: 2rem;
+    }
+
+    .about-hero p {
+        font-size: 1.2rem;
+    }
+
+    .content-card {
+        margin-bottom: 2rem;
+    }
+
+    .tech-card,
+    .feature-card,
+    .stat-card,
+    .team-card {
+        margin-bottom: 2rem;
+    }
+
+    .cta-section {
+        padding: 2rem;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+    }
+}
+</style>
+{% endblock %} 

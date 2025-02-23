@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+
+{% block title %}Crop Recommendation - AgriBrain{% endblock %}
+
+{% block content %}
+<section class="recommendation-section">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <h2><i class="fas fa-seedling"></i> Crop Recommendation System</h2>
+            <p class="section-description">Get personalized crop recommendations based on soil and environmental parameters</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="recommendation-form" data-aos="fade-up">
+                    <form id="cropForm" onsubmit="getCropRecommendation(event)">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="Nitrogen" class="form-label">Nitrogen (N) <i class="fas fa-info-circle" data-bs-toggle="tooltip" title="Nitrogen content in mg/kg"></i></label>
+                                <input type="number" id="Nitrogen" name="Nitrogen" class="form-control" required min="0" step="0.01">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="Phosphorus" class="form-label">Phosphorus (P) <i class="fas fa-info-circle" data-bs-toggle="tooltip" title="Phosphorus content in mg/kg"></i></label>
+                                <input type="number" id="Phosphorus" name="Phosphorus" class="form-control" required min="0" step="0.01">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="Potassium" class="form-label">Potassium (K) <i class="fas fa-info-circle" data-bs-toggle="tooltip" title="Potassium content in mg/kg"></i></label>
+                                <input type="number" id="Potassium" name="Potassium" class="form-control" required min="0" step="0.01">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label for="Temperature" class="form-label">Temperature <i class="fas fa-info-circle" data-bs-toggle="tooltip" title="Average temperature in °C"></i></label>
+                                <input type="number" id="Temperature" name="Temperature" class="form-control" required step="0.01">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="Humidity" class="form-label">Humidity <i class="fas fa-info-circle" data-bs-toggle="tooltip" title="Relative humidity in %"></i></label>
+                                <input type="number" id="Humidity" name="Humidity" class="form-control" required min="0" max="100" step="0.01">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="Ph" class="form-label">pH Value <i class="fas fa-info-circle" data-bs-toggle="tooltip" title="Soil pH level (0-14)"></i></label>
+                                <input type="number" id="Ph" name="Ph" class="form-control" required min="0" max="14" step="0.01">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="Rainfall" class="form-label">Rainfall <i class="fas fa-info-circle" data-bs-toggle="tooltip" title="Annual rainfall in mm"></i></label>
+                                <input type="number" id="Rainfall" name="Rainfall" class="form-control" required min="0" step="0.01">
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg" id="submitButton">
+                                <i class="fas fa-search"></i> Get Recommendation
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="recommendationResult" class="recommendation-result mt-4"></div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+.recommendation-section {
+    padding-top: 8rem;
+    min-height: 100vh;
+    background-color: var(--background-color);
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-header h2 {
+    color: var(--text-color);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.section-header h2 i {
+    color: var(--primary-color);
+}
+
+.section-description {
+    color: var(--light-text);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.recommendation-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.form-label {
+    color: var(--text-color);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-label i {
+    color: var(--light-text);
+    font-size: 0.9rem;
+    cursor: help;
+}
+
+.form-control {
+    border: 2px solid var(--input-border);
+    border-radius: 0.5rem;
+    padding: 0.8rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.btn-primary i {
+    margin-right: 0.5rem;
+}
+
+.recommendation-result {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.recommendation-result.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.alert {
+    border: none;
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+.alert-danger {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.alert-danger i {
+    margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .recommendation-section {
+        padding-top: 6rem;
+    }
+
+    .section-header h2 {
+        font-size: 2rem;
+    }
+
+    .recommendation-form {
+        padding: 1.5rem;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Initialize tooltips
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+});
+
+async function getCropRecommendation(event) {
+    event.preventDefault();
+    
+    const form = event.target;
+    const submitButton = form.querySelector('button[type="submit"]');
+    const resultDiv = document.getElementById('recommendationResult');
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    
+    // Show loading state
+    submitButton.disabled = true;
+    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+    resultDiv.innerHTML = '';
+    resultDiv.classList.remove('show');
+    
+    try {
+        const response = await fetch('/api/crop-recommendation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (result.error) {
+            resultDiv.innerHTML = `
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-circle"></i>
+                    ${result.error}
+                </div>
+            `;
+        } else {
+            const recommendationHtml = marked.parse(result.detailed_recommendation);
+            resultDiv.innerHTML = `
+                <div class="p-4">
+                    <h2 class="text-center mb-4">
+                        <i class="fas fa-check-circle text-success"></i>
+                        Recommended Crop: ${result.predicted_crop}
+                    </h2>
+                    <div class="markdown-body">
+                        ${recommendationHtml}
+                    </div>
+                </div>
+            `;
+            form.reset();
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        resultDiv.innerHTML = `
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-circle"></i>
+                An error occurred. Please try again.
+            </div>
+        `;
+    } finally {
+        submitButton.disabled = false;
+        submitButton.innerHTML = '<i class="fas fa-search"></i> Get Recommendation';
+        resultDiv.classList.add('show');
+        
+        if (resultDiv.innerHTML) {
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+}
+</script>
+{% endblock %} 

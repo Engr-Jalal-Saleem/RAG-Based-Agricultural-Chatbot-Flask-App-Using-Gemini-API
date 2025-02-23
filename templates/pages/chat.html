@@ -1,0 +1,493 @@
+{% extends "base.html" %}
+
+{% block title %}Chat with AgriBrain{% endblock %}
+
+{% block content %}
+<section class="chat-section">
+    <div class="container">
+        <!-- Chat Header -->
+        <div class="chat-header" data-aos="fade-up">
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+                <h2>AI Agricultural Assistant</h2>
+            </div>
+            <p class="subtitle">Your Intelligent Farming Guide</p>
+        </div>
+
+        <!-- Chat Interface -->
+        <div class="chat-interface" data-aos="fade-up">
+            <!-- Chat Messages -->
+            <div class="chat-messages markdown-body" id="chatMessages">
+                <!-- Welcome Message -->
+                <div class="bot-message">
+                    <i class="fas fa-robot"></i>
+                    <div class="message-content">
+                        <h2>Welcome to AgriBrain! 🌱</h2>
+                        <p>I am your intelligent agricultural assistant, powered by advanced AI and a comprehensive agricultural knowledge base. I can help you with:</p>
+                        <ul>
+                            <li>🌾 Crop recommendations based on soil and weather conditions</li>
+                            <li>🦠 Pest and disease identification & management</li>
+                            <li>🌿 Sustainable farming practices</li>
+                            <li>💧 Irrigation and water management</li>
+                            <li>🌡️ Weather-based farming advice</li>
+                            <li>📈 Yield improvement strategies</li>
+                            <li>🌱 Soil health management</li>
+                            <li>📊 Market trends and crop planning</li>
+                        </ul>
+                        <p>Try asking me questions like:</p>
+                        <div class="suggested-questions">
+                            <button class="btn btn-outline-success btn-sm m-1" onclick="askQuestion('What crops are suitable for sandy soil with low rainfall?')">Crops for sandy soil</button>
+                            <button class="btn btn-outline-success btn-sm m-1" onclick="askQuestion('How can I improve soil fertility naturally?')">Improve soil fertility</button>
+                            <button class="btn btn-outline-success btn-sm m-1" onclick="askQuestion('What are organic methods to control pests in tomatoes?')">Organic pest control</button>
+                            <button class="btn btn-outline-success btn-sm m-1" onclick="askQuestion('How to maximize crop yield in limited space?')">Maximize yield</button>
+                            <button class="btn btn-outline-success btn-sm m-1" onclick="askQuestion('What are the best practices for drip irrigation?')">Drip irrigation tips</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="chat-input-container">
+                <form id="chatForm" onsubmit="sendMessage(event)">
+                    <div class="chat-input">
+                        <input 
+                            type="text" 
+                            id="userInput" 
+                            placeholder="Ask me anything about agriculture..." 
+                            autocomplete="off"
+                            required
+                        >
+                        <button type="submit" id="sendButton">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+.chat-section {
+    padding-top: 8rem;
+    min-height: 100vh;
+    background-color: var(--background-color);
+}
+
+.chat-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.chat-header .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.chat-header .logo i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+}
+
+.chat-header h2 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 2rem;
+}
+
+.chat-header .subtitle {
+    color: var(--light-text);
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.chat-interface {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 16rem);
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+}
+
+.user-message,
+.bot-message {
+    margin: 1rem 0;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    position: relative;
+    max-width: 85%;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.user-message {
+    background: var(--primary-color);
+    color: white;
+    margin-left: auto;
+    padding-left: 4rem;
+}
+
+.bot-message {
+    background: var(--bot-message-bg);
+    margin-right: auto;
+    padding-left: 4rem;
+}
+
+.user-message i,
+.bot-message i {
+    position: absolute;
+    left: 1.5rem;
+    top: 1.8rem;
+    font-size: 1.5rem;
+}
+
+.message-content {
+    line-height: 1.6;
+}
+
+.message-content h2 {
+    color: inherit;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.message-content ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.message-content li {
+    margin: 0.5rem 0;
+}
+
+.suggested-questions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.suggested-questions button {
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.suggested-questions button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.chat-input-container {
+    padding: 1.5rem;
+    background: white;
+    border-top: 1px solid var(--input-border);
+}
+
+.chat-input {
+    display: flex;
+    gap: 1rem;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    border: 2px solid var(--input-border);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.chat-input input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+}
+
+.chat-input button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat-input button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.chat-input button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.chat-input button i {
+    font-size: 1.2rem;
+}
+
+.references {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+}
+
+.references h4 {
+    color: inherit;
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+}
+
+.references ul {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Loading Animation */
+.typing {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: var(--bot-message-bg);
+    border-radius: 1rem;
+    width: fit-content;
+}
+
+.typing span {
+    width: 8px;
+    height: 8px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    animation: typing 1s infinite;
+    opacity: 0.4;
+}
+
+.typing span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typing {
+    0%, 100% {
+        transform: translateY(0);
+        opacity: 0.4;
+    }
+    50% {
+        transform: translateY(-5px);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .chat-section {
+        padding-top: 6rem;
+    }
+
+    .chat-header {
+        padding: 1.5rem;
+    }
+
+    .chat-header .logo i {
+        font-size: 2rem;
+    }
+
+    .chat-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .chat-interface {
+        height: calc(100vh - 14rem);
+    }
+
+    .user-message,
+    .bot-message {
+        max-width: 95%;
+        padding: 1rem 1rem 1rem 3.5rem;
+    }
+
+    .user-message i,
+    .bot-message i {
+        left: 1rem;
+        top: 1.2rem;
+    }
+
+    .chat-input-container {
+        padding: 1rem;
+    }
+
+    .chat-input input {
+        padding: 0.8rem 1rem;
+    }
+
+    .chat-input button {
+        padding: 0.8rem 1.2rem;
+    }
+
+    .suggested-questions {
+        flex-direction: column;
+    }
+
+    .suggested-questions button {
+        width: 100%;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let conversationHistory = [];
+
+async function sendMessage(event) {
+    if (event) event.preventDefault();
+    
+    const userInput = document.getElementById('userInput');
+    const sendButton = document.getElementById('sendButton');
+    const message = userInput.value.trim();
+    
+    if (!message) return;
+
+    // Disable input and button
+    userInput.disabled = true;
+    sendButton.disabled = true;
+    
+    // Add user message
+    appendMessage(message, true);
+    userInput.value = '';
+
+    // Add typing indicator
+    const chatMessages = document.getElementById('chatMessages');
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'bot-message typing-message';
+    typingDiv.innerHTML = `
+        <i class="fas fa-robot"></i>
+        <div class="typing">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    `;
+    chatMessages.appendChild(typingDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    try {
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                message: message,
+                history: conversationHistory
+            })
+        });
+        
+        const result = await response.json();
+        
+        // Remove typing indicator
+        typingDiv.remove();
+        
+        if (result.error) {
+            appendMessage('Error: ' + result.error, false);
+        } else {
+            appendMessage(result.response, false, result.references);
+            conversationHistory = result.history;
+        }
+    } catch (error) {
+        // Remove typing indicator
+        typingDiv.remove();
+        
+        console.error('Error:', error);
+        appendMessage('Sorry, I encountered an error. Please try again.', false);
+    } finally {
+        // Re-enable input and button
+        userInput.disabled = false;
+        sendButton.disabled = false;
+        userInput.focus();
+    }
+}
+
+function appendMessage(message, isUser, references = []) {
+    const chatMessages = document.getElementById('chatMessages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = isUser ? 'user-message' : 'bot-message';
+    
+    let messageContent = '';
+    if (isUser) {
+        messageContent = `
+            <i class="fas fa-user"></i>
+            <div class="message-content">${message}</div>
+        `;
+    } else {
+        messageContent = `
+            <i class="fas fa-robot"></i>
+            <div class="message-content">
+                ${marked.parse(message)}
+                ${references && references.length > 0 ? `
+                    <div class="references">
+                        <h4>📚 References:</h4>
+                        <ul>
+                            ${references.map(ref => `<li>${ref}</li>`).join('')}
+                        </ul>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    }
+    
+    messageDiv.innerHTML = messageContent;
+    chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function askQuestion(question) {
+    document.getElementById('userInput').value = question;
+    sendMessage();
+}
+
+// Enter key handler
+document.getElementById('userInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+    }
+});
+</script>
+{% endblock %} 

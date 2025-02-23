@@ -1,0 +1,286 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content container">
+        <div class="row align-items-center">
+            <div class="col-md-6" data-aos="fade-right">
+                <h1>Revolutionizing Agriculture with AI</h1>
+                <p>Empowering farmers with intelligent crop recommendations and disease detection using advanced AI technology.</p>
+                <div class="hero-buttons">
+                    <a href="{{ url_for('chat') }}" class="btn btn-primary btn-lg">Get Started</a>
+                    <a href="{{ url_for('about') }}" class="btn btn-outline-light btn-lg">Learn More</a>
+                </div>
+            </div>
+            <div class="col-md-6" data-aos="fade-left">
+                <!-- Removed agriculture logo -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="features-section">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">Intelligent Agricultural Solutions</h2>
+        <div class="row">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <a href="{{ url_for('chat') }}" class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>AI Chat Assistant</h3>
+                    <p>Get expert agricultural advice 24/7 with our AI-powered chatbot.</p>
+                </a>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <a href="{{ url_for('crop_recommendation') }}" class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h3>Crop Recommendation</h3>
+                    <p>Receive personalized crop suggestions based on soil and climate conditions.</p>
+                </a>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <a href="{{ url_for('leaf_analysis') }}" class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Disease Detection</h3>
+                    <p>Identify plant diseases instantly with our advanced image analysis.</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="how-it-works-section">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">How It Works</h2>
+        <div class="row">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Input Data</h3>
+                    <p>Provide soil parameters or upload leaf images for analysis.</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>AI Analysis</h3>
+                    <p>Our advanced AI models process your data for accurate results.</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Get Results</h3>
+                    <p>Receive detailed recommendations and actionable insights.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Benefits Section -->
+<section class="benefits-section">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">Why Choose AgriBrain?</h2>
+        <div class="row">
+            <div class="col-md-6" data-aos="fade-right">
+                <div class="benefits-content">
+                    <h3>Empowering Farmers</h3>
+                    <ul class="benefits-list">
+                        <li><i class="fas fa-check-circle"></i> 24/7 Expert Agricultural Advice</li>
+                        <li><i class="fas fa-check-circle"></i> Data-Driven Crop Recommendations</li>
+                        <li><i class="fas fa-check-circle"></i> Early Disease Detection</li>
+                        <li><i class="fas fa-check-circle"></i> Sustainable Farming Practices</li>
+                        <li><i class="fas fa-check-circle"></i> Increased Crop Yield</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6" data-aos="fade-left">
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <h4>95%</h4>
+                        <p>Accuracy in Disease Detection</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>1000+</h4>
+                        <p>Farmers Assisted</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>50+</h4>
+                        <p>Crop Varieties Supported</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>24/7</h4>
+                        <p>AI Assistant Available</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container text-center">
+        <h2 data-aos="fade-up">Ready to Transform Your Farming?</h2>
+        <p data-aos="fade-up">Join thousands of farmers using AgriBrain to optimize their crops.</p>
+        <div class="cta-buttons" data-aos="fade-up">
+            <a href="{{ url_for('chat') }}" class="btn btn-primary btn-lg">Start Using AgriBrain</a>
+            <a href="{{ url_for('about') }}" class="btn btn-outline-primary btn-lg">Learn More</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+.hero-section {
+    background: linear-gradient(135deg, #1B5E20 0%, #2ECC71 100%);
+    padding: 8rem 0 6rem;
+    margin-bottom: 0;
+}
+
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    background: #E8F5E9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.feature-icon i {
+    font-size: 2rem;
+    color: #2ECC71;
+}
+
+.feature-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+}
+
+.feature-card:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.feature-card:hover .feature-icon {
+    background: #2ECC71;
+}
+
+.feature-card:hover .feature-icon i {
+    color: white;
+}
+
+/* Additional styles for home page */
+.how-it-works-section {
+    padding: 6rem 0;
+    background-color: var(--background-color);
+}
+
+.step-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0 auto 1rem;
+}
+
+.benefits-section {
+    padding: 6rem 0;
+    background: white;
+}
+
+.benefits-list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+}
+
+.benefits-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.benefits-list li i {
+    color: var(--primary-color);
+    margin-right: 1rem;
+}
+
+.cta-section {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+    text-align: center;
+}
+
+.cta-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.cta-section p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.cta-buttons .btn-outline-primary {
+    border-color: white;
+    color: white;
+}
+
+.cta-buttons .btn-outline-primary:hover {
+    background: white;
+    color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+    .cta-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .cta-section h2 {
+        font-size: 2rem;
+    }
+}
+</style>
+{% endblock %} 

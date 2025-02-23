@@ -1,0 +1,583 @@
+{% extends "base.html" %}
+
+{% block title %}Leaf Health Analysis - AgriBrain{% endblock %}
+
+{% block content %}
+<section class="leaf-analysis-section">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <h2><i class="fas fa-leaf"></i> Leaf Health Analysis</h2>
+            <p class="section-description">Upload a leaf image to analyze its health condition and get expert recommendations</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Upload Section -->
+            <div class="col-lg-5" data-aos="fade-right">
+                <div class="upload-section">
+                    <form id="leafHealthForm" class="mb-4">
+                        <div class="upload-box" id="uploadBox">
+                            <input type="file" id="leafImage" name="image" accept="image/*" class="form-control" onchange="previewImage(this)">
+                            <div class="upload-placeholder">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Drop your leaf image here or click to upload</p>
+                                <small class="text-muted">Supports: JPG, PNG (Max 5MB)</small>
+                            </div>
+                        </div>
+
+                        <div class="preview-box mt-4 d-none">
+                            <img id="imagePreview" src="#" alt="Preview">
+                            <button type="button" class="btn btn-sm btn-danger remove-preview" onclick="removePreview()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mt-4 w-100" id="analyzeButton">
+                            <i class="fas fa-microscope"></i> Analyze Leaf Health
+                        </button>
+                    </form>
+
+                    <!-- Instructions -->
+                    <div class="instructions mt-4">
+                        <h4><i class="fas fa-info-circle"></i> How to get the best results:</h4>
+                        <ul>
+                            <li>Take a clear, well-lit photo of the leaf</li>
+                            <li>Ensure the leaf fills most of the frame</li>
+                            <li>Include any visible symptoms or discoloration</li>
+                            <li>Avoid shadows and reflections if possible</li>
+                            <li>Use natural lighting when possible</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="col-lg-7" data-aos="fade-left">
+                <div class="result-section">
+                    <!-- Analysis Results -->
+                    <div id="analysisResult" class="d-none">
+                        <div class="detection-details">
+                            <h4 class="detection-title mb-3"></h4>
+                            <div class="detection-description"></div>
+                        </div>
+                        
+                        <div class="image-comparison">
+                            <div class="original-image">
+                                <h4>Original Image</h4>
+                                <img id="originalImage" src="#" alt="Original Image">
+                            </div>
+                            <div class="processed-image">
+                                <h4>Analysis Result</h4>
+                                <img id="resultImage" src="#" alt="Analysis Result">
+                            </div>
+                        </div>
+                        
+                        <div class="recommendations mt-4">
+                            <h4>Expert Recommendations</h4>
+                            <div class="recommendations-content markdown-body"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Placeholder -->
+                    <div id="placeholderResult">
+                        <div class="text-center">
+                            <i class="fas fa-leaf"></i>
+                            <h4>Upload a leaf image to get started</h4>
+                            <p>Our AI will analyze the leaf health and provide detailed recommendations</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+.leaf-analysis-section {
+    padding-top: 8rem;
+    min-height: 100vh;
+    background-color: var(--background-color);
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-header h2 {
+    color: var(--text-color);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.section-header h2 i {
+    color: var(--primary-color);
+}
+
+.section-description {
+    color: var(--light-text);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Upload Section */
+.upload-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.upload-box {
+    border: 3px dashed var(--input-border);
+    border-radius: 1rem;
+    padding: 3rem 2rem;
+    text-align: center;
+    position: relative;
+    transition: all 0.3s ease;
+    background-color: var(--background-color);
+    cursor: pointer;
+}
+
+.upload-box:hover {
+    border-color: var(--primary-color);
+    background-color: var(--bot-message-bg);
+    transform: translateY(-2px);
+}
+
+.upload-box input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.upload-placeholder {
+    pointer-events: none;
+}
+
+.upload-placeholder i {
+    font-size: 4rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
+.upload-placeholder p {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.upload-placeholder small {
+    font-size: 0.9rem;
+}
+
+/* Preview Box */
+.preview-box {
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: var(--background-color);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.preview-box img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    display: block;
+}
+
+.remove-preview {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #dc3545;
+    color: white;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.remove-preview:hover {
+    transform: scale(1.1);
+    background: #c82333;
+}
+
+/* Instructions */
+.instructions {
+    background-color: var(--bot-message-bg);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+}
+
+.instructions h4 {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.instructions ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.instructions li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.instructions li::before {
+    content: '•';
+    color: var(--primary-color);
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+/* Results Section */
+.result-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    min-height: 400px;
+}
+
+#placeholderResult {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    color: var(--light-text);
+    text-align: center;
+}
+
+#placeholderResult i {
+    font-size: 4rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+#placeholderResult h4 {
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+/* Analysis Results */
+.detection-details {
+    background-color: var(--bot-message-bg);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.detection-title {
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--input-border);
+}
+
+.image-comparison {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.original-image,
+.processed-image {
+    background: var(--background-color);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+.original-image h4,
+.processed-image h4 {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.original-image img,
+.processed-image img {
+    width: 100%;
+    height: 300px;
+    object-fit: contain;
+    border-radius: 0.5rem;
+    background: white;
+}
+
+.recommendations {
+    background-color: var(--bot-message-bg);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+}
+
+.recommendations h4 {
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--input-border);
+}
+
+/* Loading State */
+.analyzing {
+    position: relative;
+    pointer-events: none;
+}
+
+.analyzing::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 0.5rem;
+}
+
+.analyzing::before {
+    content: '🔍 Analyzing...';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    background: var(--primary-color);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .leaf-analysis-section {
+        padding-top: 6rem;
+    }
+
+    .section-header h2 {
+        font-size: 2rem;
+    }
+
+    .upload-section,
+    .result-section {
+        padding: 1.5rem;
+    }
+
+    .upload-box {
+        padding: 2rem 1rem;
+    }
+
+    .upload-placeholder i {
+        font-size: 3rem;
+    }
+
+    .upload-placeholder p {
+        font-size: 1rem;
+    }
+
+    .image-comparison {
+        grid-template-columns: 1fr;
+    }
+
+    .original-image img,
+    .processed-image img {
+        height: 250px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function previewImage(input) {
+    const preview = document.getElementById('imagePreview');
+    const previewBox = document.querySelector('.preview-box');
+    const placeholder = document.querySelector('.upload-placeholder');
+    const uploadBox = document.getElementById('uploadBox');
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            previewBox.classList.remove('d-none');
+            placeholder.style.display = 'none';
+            uploadBox.style.padding = '1rem';
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function removePreview() {
+    const preview = document.getElementById('imagePreview');
+    const previewBox = document.querySelector('.preview-box');
+    const placeholder = document.querySelector('.upload-placeholder');
+    const uploadBox = document.getElementById('uploadBox');
+    const input = document.getElementById('leafImage');
+
+    preview.src = '#';
+    previewBox.classList.add('d-none');
+    placeholder.style.display = 'block';
+    uploadBox.style.padding = '3rem 2rem';
+    input.value = '';
+}
+
+document.getElementById('leafHealthForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const form = this;
+    const submitButton = form.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.innerHTML;
+    const resultSection = document.querySelector('.result-section');
+    const analysisResult = document.getElementById('analysisResult');
+    const placeholder = document.getElementById('placeholderResult');
+    
+    // Show loading state
+    submitButton.disabled = true;
+    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+    resultSection.classList.add('analyzing');
+    
+    try {
+        const formData = new FormData(form);
+        
+        const response = await fetch('/api/analyze-leaf', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (result.error) {
+            showError(result.error);
+        } else {
+            displayResults(result);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        showError('An error occurred during analysis. Please try again.');
+    } finally {
+        // Reset loading state
+        submitButton.disabled = false;
+        submitButton.innerHTML = originalButtonText;
+        resultSection.classList.remove('analyzing');
+    }
+});
+
+function displayResults(result) {
+    const analysisResult = document.getElementById('analysisResult');
+    const placeholder = document.getElementById('placeholderResult');
+    const originalImage = document.getElementById('originalImage');
+    const resultImage = document.getElementById('resultImage');
+    const detectionTitle = document.querySelector('.detection-title');
+    const detectionDescription = document.querySelector('.detection-description');
+    const recommendationsContent = document.querySelector('.recommendations-content');
+
+    // Hide placeholder and show results
+    placeholder.style.display = 'none';
+    analysisResult.classList.remove('d-none');
+
+    // Update images
+    originalImage.src = result.original_image;
+    resultImage.src = result.processed_image;
+
+    // Update detection details
+    detectionTitle.textContent = `Detected Condition: ${result.condition} (${(result.confidence * 100).toFixed(1)}% confidence)`;
+    detectionDescription.innerHTML = marked.parse(result.analysis);
+
+    // Update recommendations
+    recommendationsContent.innerHTML = marked.parse(result.recommendations);
+
+    // Scroll to results
+    analysisResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function showError(message) {
+    const analysisResult = document.getElementById('analysisResult');
+    const placeholder = document.getElementById('placeholderResult');
+    
+    analysisResult.classList.add('d-none');
+    placeholder.style.display = 'block';
+    placeholder.innerHTML = `
+        <div class="alert alert-danger">
+            <i class="fas fa-exclamation-circle"></i>
+            <h4>Error</h4>
+            <p>${message}</p>
+        </div>
+    `;
+}
+
+// Drag and drop handling
+const uploadBox = document.getElementById('uploadBox');
+
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+    uploadBox.addEventListener(eventName, preventDefaults, false);
+});
+
+function preventDefaults(e) {
+    e.preventDefault();
+    e.stopPropagation();
+}
+
+['dragenter', 'dragover'].forEach(eventName => {
+    uploadBox.addEventListener(eventName, highlight, false);
+});
+
+['dragleave', 'drop'].forEach(eventName => {
+    uploadBox.addEventListener(eventName, unhighlight, false);
+});
+
+function highlight(e) {
+    uploadBox.classList.add('highlight');
+}
+
+function unhighlight(e) {
+    uploadBox.classList.remove('highlight');
+}
+
+uploadBox.addEventListener('drop', handleDrop, false);
+
+function handleDrop(e) {
+    const dt = e.dataTransfer;
+    const files = dt.files;
+
+    if (files.length > 0) {
+        const input = document.getElementById('leafImage');
+        input.files = files;
+        previewImage(input);
+    }
+}
+</script>
+{% endblock %}

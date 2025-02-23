@@ -1,0 +1,312 @@
+{% extends "base.html" %}
+
+{% block title %}Leaf Health Analysis{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-4">
+        <h1>Leaf Health Analysis</h1>
+        <p>Upload a leaf image to analyze its health condition</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form id="leafForm" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Choose an image</label>
+                            <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Analyze Leaf</button>
+                    </form>
+
+                    <div id="result" class="mt-4" style="display: none;">
+                        <h4 id="detection" class="mb-3"></h4>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <h5>Original Image</h5>
+                                <img id="originalImage" class="img-fluid rounded" style="max-height: 300px; width: 100%; object-fit: contain;">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h5>Analysis Result</h5>
+                                <img id="processedImage" class="img-fluid rounded" style="max-height: 300px; width: 100%; object-fit: contain;">
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info mt-3" id="analysis"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('leafForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const form = this;
+    const submitBtn = form.querySelector('button');
+    const result = document.getElementById('result');
+    
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Analyzing...';
+    result.style.display = 'none';
+    
+    try {
+        const formData = new FormData(form);
+        const response = await fetch('/api/analyze-leaf', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.error) {
+            alert(data.error);
+            return;
+        }
+        
+        // Display results
+        document.getElementById('detection').textContent = 
+            `Detected: ${data.condition} (${(data.confidence * 100).toFixed(1)}% confidence)`;
+        document.getElementById('originalImage').src = data.original_image;
+        document.getElementById('processedImage').src = data.processed_image;
+        document.getElementById('analysis').textContent = data.analysis;
+        
+        result.style.display = 'block';
+        result.scrollIntoView({ behavior: 'smooth' });
+        
+    } catch (error) {
+        alert('Error analyzing image. Please try again.');
+        console.error(error);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Analyze Leaf';
+    }
+});
+</script>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+.upload-card {
+    background: white;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.upload-area {
+    border: 2px dashed #2ECC71;
+    border-radius: 10px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+}
+
+.upload-area:hover {
+    border-color: #27AE60;
+    background: #fff;
+}
+
+.upload-placeholder i {
+    font-size: 3rem;
+    color: #2ECC71;
+    margin-bottom: 1rem;
+}
+
+.preview-container {
+    display: none;
+    position: relative;
+    margin: -1rem;
+    margin-bottom: 1rem;
+}
+
+.preview-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.btn-remove {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 0;
+}
+
+.info-box {
+    background: #E8F5E9;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.info-box h5 {
+    color: #2ECC71;
+    margin-bottom: 1rem;
+}
+
+.info-box ul li {
+    margin-bottom: 0.5rem;
+    color: #666;
+}
+
+.image-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.result-image {
+    text-align: center;
+}
+
+.result-image img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    padding: 0.5rem;
+    background: white;
+}
+
+.result-image h5 {
+    margin-bottom: 1rem;
+    color: #2ECC71;
+}
+
+.analysis-details {
+    background: #E8F5E9;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .image-comparison {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('leafForm');
+    const uploadArea = document.getElementById('uploadBox');
+    const fileInput = document.getElementById('image');
+    const previewContainer = document.getElementById('preview-container');
+    const previewImage = document.getElementById('imagePreview');
+    const placeholder = document.querySelector('.upload-placeholder');
+
+    function showPreview(file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            previewImage.src = e.target.result;
+            previewContainer.style.display = 'block';
+            placeholder.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+    }
+
+    uploadArea.addEventListener('click', () => fileInput.click());
+    
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.style.borderColor = '#27AE60';
+        uploadArea.style.background = '#E8F5E9';
+    });
+
+    uploadArea.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        uploadArea.style.borderColor = '#2ECC71';
+        uploadArea.style.background = '#f8f9fa';
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.style.borderColor = '#2ECC71';
+        uploadArea.style.background = '#f8f9fa';
+        
+        if (e.dataTransfer.files.length) {
+            fileInput.files = e.dataTransfer.files;
+            showPreview(e.dataTransfer.files[0]);
+        }
+    });
+
+    fileInput.addEventListener('change', function() {
+        if (this.files[0]) {
+            showPreview(this.files[0]);
+        }
+    });
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const submitBtn = form.querySelector('button');
+        const result = document.getElementById('result');
+        
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Analyzing...';
+        result.style.display = 'none';
+
+        try {
+            const formData = new FormData(form);
+            const response = await fetch('/api/analyze-leaf', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const data = await response.json();
+            
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
+            
+            // Display results
+            document.getElementById('detection').textContent = 
+                `Detected: ${data.condition} (${(data.confidence * 100).toFixed(1)}% confidence)`;
+            document.getElementById('originalImage').src = data.original_image;
+            document.getElementById('processedImage').src = data.processed_image;
+            document.getElementById('analysis').textContent = data.analysis;
+            
+            result.style.display = 'block';
+            result.scrollIntoView({ behavior: 'smooth' });
+            
+        } catch (error) {
+            alert('Error analyzing image. Please try again.');
+            console.error(error);
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Analyze Leaf';
+        }
+    });
+});
+
+function removePreview() {
+    document.getElementById('imagePreview').src = '#';
+    document.getElementById('preview-container').style.display = 'none';
+    document.querySelector('.upload-placeholder').style.display = 'block';
+    document.getElementById('image').value = '';
+}
+</script>
+{% endblock %} 
