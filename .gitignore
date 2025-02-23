@@ -29,10 +29,6 @@ wheels/
 .installed.cfg
 *.egg
 
-# Vector Store
-persistent_storage/
-vectordb/
-
 # IDE
 .idea/
 .vscode/
