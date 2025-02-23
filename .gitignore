@@ -7,7 +7,13 @@ ENV/
 .venv1/
 venv1/
 __venv__/
-
+CV_Model
+persistent_storage
+ML_Recommendation_Models
+-p
+uploads
+D:\Chatbot-Flask-App-Using-Gemini-API\CV_Model
+D:\Chatbot-Flask-App-Using-Gemini-API\persistent_storage
 # Python
 __pycache__/
 *.py[cod]
