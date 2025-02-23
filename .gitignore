@@ -1,0 +1,65 @@
+# Environment
+.env
+venv/
+env/
+.venv/
+ENV/
+.venv1/
+venv1/
+__venv__/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+logs/
+log/
+
+# Test coverage
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# System files
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Explicitly include these directories
+!AgriBrain Books/**
+!ML_Recommendation_Models/**
+!persistent_storage/**
+!resources/**
